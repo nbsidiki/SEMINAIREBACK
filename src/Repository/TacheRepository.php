@@ -21,6 +21,8 @@ class TacheRepository extends ServiceEntityRepository
         parent::__construct($registry, Tache::class);
     }
 
+
+
     public function save(Tache $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -28,6 +30,21 @@ class TacheRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+        /**
+     * Find all entities by user ID.
+     *
+     * @param int $userId
+     * @return YourEntity[] Returns an array of YourEntity objects
+     */
+    public function findAllByUserId(int $user_id): array
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user_id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->getQuery()
+            ->getResult();
     }
 
     public function remove(Tache $entity, bool $flush = false): void
