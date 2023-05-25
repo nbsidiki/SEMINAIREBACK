@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 class MyTachesController extends AbstractController
 {
 
-    #[Route('/mytaches/{id}', name: 'app_my_taches')]
+    #[Route('/mytaches', name: 'app_my_taches')]
     public function findTaches(string $id, EntityManagerInterface $entityManager)
     {
-        $taches = $entityManager->getRepository(Tache::class)->findAllByUserId($id);
+        $taches = $entityManager->getRepository(Tache::class)->findAll();
 
 
 
-        return $this->render('my_taches/index.html.twig', [
+        return $this->render('my_taches/taches.html.twig', [
             'taches' => $taches,
         ]);
     }
@@ -28,17 +28,21 @@ class MyTachesController extends AbstractController
     #[Route('/addtaches', name: 'my_taches')]
     public function addTache(Request $request, EntityManagerInterface $entityManager)
     {
-        $taches = new Tache();
-        $form = $this->createForm(AddTachesType::class ,$taches);
+        $tache = new Tache();
+        $tache->setUser($this->getUser());
+        $form = $this->createForm(AddTachesType::class ,$tache);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() ){
-            
+            $entityManager->persist($tache);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_my_taches');
         }
 
 
         return $this->render('my_taches/index.html.twig', [
-            'taches' => $taches,
+            'tache' => $tache,
+            'form' => $form,
         ]);
     }
 }

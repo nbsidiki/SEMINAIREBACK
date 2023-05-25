@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Taches{% endblock %}
+
+{% block body %}
+<h1>Taches</h1>
+<ul>
+    {% for tache in taches %}
+        <li>{{ tache.tacheTitre|e }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
