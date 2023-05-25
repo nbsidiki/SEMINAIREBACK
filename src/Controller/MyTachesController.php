@@ -14,7 +14,7 @@ class MyTachesController extends AbstractController
 {
 
     #[Route('/mytaches', name: 'app_my_taches')]
-    public function findTaches(string $id, EntityManagerInterface $entityManager)
+    public function findTaches( EntityManagerInterface $entityManager)
     {
         $taches = $entityManager->getRepository(Tache::class)->findAll();
 
