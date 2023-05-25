@@ -2,12 +2,49 @@
 
 {% block title %}Taches{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        h1 {
+            color: #008080;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #008080;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #005959;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-<h1>Taches</h1>
-<ul>
-    {% for tache in taches %}
-        <li>{{ tache.titre|e }}</li>
-    {% endfor %}
-</ul>
-<a href="http://localhost:8000/addtaches">addTaches</a>
+    <h1>Taches</h1>
+    <ul>
+        {% for tache in taches %}
+            <li>{{ tache.titre|e }}</li>
+        {% endfor %}
+    </ul>
+    <a href="http://localhost:8000/addtaches" class="btn">Add Taches</a>
 {% endblock %}
